@@ -1,0 +1,67 @@
+first_step: init
+last_step: done
+default_help:
+  - "Try \
+	What my schedule like for today, \
+	When is my next class, \
+	What is my schedule like for next semster"
+
+steps:
+  init:
+    events:
+      launched:
+        next: start_request
+
+  start_request:
+    reprompt:
+      - "Sorry, I didn't understand that"
+      - "Sorry, could you repeat that please"
+    events:
+      promptclassinfo:
+        next: class_info
+      promptnextclass:
+        next: next_class
+      # promptdistance:
+        # next: done
+      # promptsemester:
+        # next: semester_info
+
+
+  #specific class inforrmation
+  class_info:
+    reprompt:
+      - "Sorry, I didn't get the class you wanted."
+      - "Please say it again, I couldnt get the class you wanted"
+
+    help:
+      - "Say Tell me information about my class"
+
+    events:
+        chooseclass:
+          next: done
+
+  #next class information 
+  next_class:
+    reprompt:
+      - "Sorry, I did not get that"
+    help:
+      - "Say What is my next class"
+      - "Say Tell my my next class"
+
+    events:
+        chooseclass:
+          next: done
+
+  # semester_info:
+  #   reprompt:
+  #     - "Sorry, I did not get that. Please say tell me my semster schedule"
+  #   help:
+  #     - "Say What is my schedule like"
+  #     - "Say Tell me my schedule"
+
+  #   events:
+  #     next:
+  #       choosesemester:
+  #           next: done
+
+  done:
