@@ -1,0 +1,26 @@
+{
+  "intents": [
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+
+      "intent": "AMAZON.YesIntent"
+    },
+    {
+      "intent": "AMAZON.NoIntent"
+    },
+    {
+      "intent" : "AMAZON.CancelIntent"
+    },
+    {
+      "intent" : "AMAZON.StopIntent"
+    },
+    {
+      "intent": "SemesterIntent"
+    },
+    {
+      "intent": "ClassIntent"
+    }
+  ]
+}
