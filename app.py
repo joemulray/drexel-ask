@@ -77,7 +77,7 @@ def session_ended():
 @supervise.guide
 def welcome():
 	app.logger.debug('welcome')
-	return question(render_template("welcome"))
+	return question(render_template("welcome_message"))
 
 
 @ask.intent('ClassIntent')
