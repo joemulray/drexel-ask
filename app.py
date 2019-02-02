@@ -38,7 +38,11 @@ class Student():
 		headerdata["ForceNewKey"] = "false"
 		response = requests.post(host + '/Authentication/', json=headerdata, \
 			headers={'X-Http-Method-Override':'PUT'})
-		self.authkey = str(response.json()['AuthKey'])
+		try:
+			self.authkey = str(response.json()['AuthKey'])
+		except KeyError as error:
+			app.logger.error("Could not obtain key from D1M")
+			exit(1)
 
 		time.ctime()
 		timestring = time.strftime('%Y%m%d%H%M%S') + '+00'
@@ -71,41 +75,48 @@ def session_ended():
 
 @ask.launch
 @supervise.guide
-def launched():
+def welcome():
+	app.logger.debug('welcome')
 	return question(render_template("welcome"))
 
 
 @ask.intent('ClassIntent')
 @supervise.guide
 def promptclassinfo():
+	app.logger.debug('promptclassinfo')
 	pass
 
 
 @ask.intent('ClassIntent')
 @supervise.guide
 def promptnextclass():
+	app.logger.debug('promptnextclass')
 	pass
 
 @ask.intent('ClassIntent')
 @supervise.guide
 def promptdistance():
+	app.logger.debug("promptdistance")
 	pass
 
 
 @ask.intent('SemesterIntent')
 @supervise.guide
 def promptsemester():
+	app.logger.debug("promptsemester")
 	pass
 
 
 @ask.intent('ClassIntent')
 @supervise.guide
 def chooseclass():
+	app.logger.debug("chooseclass")
 	pass
 
 @ask.intent('SemesterIntent')
 @supervise.guide
 def choosesemester():
+	app.logger.debug("choosesemester")
 	pass
 
 if __name__ == '__main__':
