@@ -9,7 +9,7 @@ default_help:
 steps:
   init:
     events:
-      launched:
+      welcome:
         next: start_request
 
   start_request:
@@ -23,8 +23,8 @@ steps:
         next: next_class
       # promptdistance:
         # next: done
-      # promptsemester:
-        # next: semester_info
+      promptsemester:
+        next: semester_info
 
 
   #specific class inforrmation
@@ -52,16 +52,15 @@ steps:
         chooseclass:
           next: done
 
-  # semester_info:
-  #   reprompt:
-  #     - "Sorry, I did not get that. Please say tell me my semster schedule"
-  #   help:
-  #     - "Say What is my schedule like"
-  #     - "Say Tell me my schedule"
+  semester_info:
+    reprompt:
+      - "Sorry, I did not get that. Please say tell me my semster schedule"
+    help:
+      - "Say What is my schedule like"
+      - "Say Tell me my schedule"
 
-  #   events:
-  #     next:
-  #       choosesemester:
-  #           next: done
+    events:
+        choosesemester:
+            next: done
 
   done:
