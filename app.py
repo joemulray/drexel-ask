@@ -3,6 +3,7 @@
 from configparser import ConfigParser, DuplicateOptionError, Error
 from flask import Flask, render_template, jsonify
 from flask_ask import Ask, statement, question , session, convert_errors
+from datetime import datetime
 from afg import Supervisor
 from hashlib import sha1
 import requests
@@ -19,6 +20,11 @@ config = ConfigParser()
 
 #drexel one api
 host = "https://d1m.drexel.edu/api/v2.0"
+user = None
+username = None
+password = None
+
+
 
 class Student():
 	def __init__(self, username, password):
@@ -54,7 +60,7 @@ class Student():
 	def __request_class_info(self):
 		if self.token:
 			repsonse = requests.get(host + '/Student/CourseSections', headers={'Authorization':self.token})
-			self.courses = repsonse.json()
+			self.courses = json.dumps(repsonse.json())
 
 
 @ask.on_session_started
@@ -80,57 +86,78 @@ def welcome():
 	return question(render_template("welcome_message"))
 
 
-@ask.intent('ClassIntent')
+@ask.intent("ClassIntent")
 @supervise.guide
 def promptclassinfo():
 	app.logger.debug('promptclassinfo')
 	pass
 
 
-@ask.intent('ClassIntent')
+@ask.intent("ClassIntent")
 @supervise.guide
 def promptnextclass():
 	app.logger.debug('promptnextclass')
 	pass
 
-@ask.intent('ClassIntent')
+@ask.intent("ClassIntent")
 @supervise.guide
 def promptdistance():
 	app.logger.debug("promptdistance")
-	pass
 
 
-@ask.intent('SemesterIntent')
+
+@ask.intent("SemesterIntent")
 @supervise.guide
 def promptsemester():
 	app.logger.debug("promptsemester")
 	pass
 
 
-@ask.intent('ClassIntent')
+@ask.intent("AMAZON.YesIntent")
+@supervise.guide
+def calculate_rundown():
+	app.logger("calculate_rundown")
+
+	if session.attributes["Refresh"]:
+		global user
+		user = Student(username, password)
+		session.attributes["Refresh"] = False
+		return statement(render_template("refreshed_message"))
+
+	if self.courses:
+		for course in self.courses:
+			pass
+
+	else:
+		#no classes found
+		session.attributes["Refresh"] = True
+		return question(render_template("noclasses_message"))
+
+
+
+@ask.intent("ClassIntent")
 @supervise.guide
 def chooseclass():
 	app.logger.debug("chooseclass")
 	pass
 
-@ask.intent('SemesterIntent')
+@ask.intent("SemesterIntent")
 @supervise.guide
 def choosesemester():
 	app.logger.debug("choosesemester")
 	pass
 
-if __name__ == '__main__':
 
-	username = None
-	password = None
-
+def global_init():
+	global username, password, user
 	config.read(userconfig)
 	for key in config["Drexel User"]:
 		username = key
 		password = config["Drexel User"][key]
 
+if __name__ == '__main__':
+	global_init()
 	if username is not None and password is not None:
-
-		student = Student(username, password)
+		user = Student(username, password)
 		app.run(debug=True)
 
