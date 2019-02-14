@@ -18,7 +18,7 @@ steps:
       - "Sorry, could you repeat that please"
     events:
       promptclassinfo:
-        next: class_info
+        next: done
       promptnextclass:
         next: next_class
       # promptdistance:
@@ -27,20 +27,21 @@ steps:
         next: semester_info
 
 
-  #specific class inforrmation
-  class_info:
-    reprompt:
-      - "Sorry, I didn't get the class you wanted."
-      - "Please say it again, I couldnt get the class you wanted"
+  # #specific class inforrmation
+  # class_info:
+  #   reprompt:
+  #     - "Sorry, I didn't get the class you wanted."
+  #     - "Please say it again, I couldnt get the class you wanted"
 
-    help:
-      - "Say Tell me information about my class"
+  #   help:
+  #     - "Say Tell me information about my class"
 
-    events:
-        chooseclass:
-          next: done
+  #   events:
+  #       chooseclass:
+  #         next: done
 
   #next class information 
+  
   next_class:
     reprompt:
       - "Sorry, I did not get that"

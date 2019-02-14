@@ -26,6 +26,20 @@ password = None
 
 
 
+
+class Module(object):
+	def __init__(self, object):
+		 self.coursetitle = object.get("CourseTitle", "")
+		 self.coursenumber = object.get("CourseNumber", "")
+		 self.section = object.get("Section", "")
+		 self.classmeetings = object.get("ClassMeetings", "")
+		 self.scheduledescription = object.get("ScheduleDescription", "")
+		 self.crn = object.get("Crn", "")
+
+
+	def __str__(self):
+		return "CourseTitle: %s CourseNumber: %s" %(self.coursetitle, self.coursenumber)
+
 class Student():
 	def __init__(self, username, password):
 		self.username = username
@@ -33,11 +47,11 @@ class Student():
 		self.classes = None
 		self.authkey = None
 		self.token = None
-		self.__request_token()
-		self.__request_class_info()
+		self.courses = None
+		self.term = {}
 
 
-	def __request_token(self):
+	def request_token(self):
 		headerdata = {}
 		headerdata["UserId"] = self.username
 		headerdata["Password"] = self.password
@@ -57,11 +71,24 @@ class Student():
 		self.token = self.username + ':' + hashed.digest().encode("base64").rstrip('\n') + ':' + timestring
 
 
-	def __request_class_info(self):
+	def request_class_info(self):
 		if self.token:
-			repsonse = requests.get(host + '/Student/CourseSections', headers={'Authorization':self.token})
-			self.courses = json.dumps(repsonse.json())
+			response = requests.get(host + '/Student/CourseSections', headers={'Authorization':self.token})
+			self.rawcourses = json.dumps(response.json())
+			self.courses = response.json()
+			if response.status_code == 401:
+				app.logger.error("Could not obtain token")
+				exit(1)
 
+			for course in self.courses:
+				if course["Term"]["TermCode"] not in self.term:
+					# create new module object
+					self.term[course["Term"]["TermCode"]] = [Module(course)]
+				else:
+					self.term[course["Term"]["TermCode"]].append(Module(course))
+
+			#now that we have the courses loaded up sort the keys
+			sorted(self.term.items(), key=lambda mod: mod[1])
 
 @ask.on_session_started
 @supervise.start
@@ -72,7 +99,7 @@ def new_session():
 @supervise.stop
 def close_user_session():
     app.logger.debug("user session stopped")
-
+ 
 
 @ask.session_ended
 def session_ended():
@@ -90,17 +117,25 @@ def welcome():
 @supervise.guide
 def promptclassinfo():
 	app.logger.debug('promptclassinfo')
-	pass
+
+	currentterm = list(user.term.keys())[0]
+
+	if user.term is not None:
+		schedule = user.term[currentterm]
+
+	CourseNames = ""
+
+	for course in schedule:
+		CourseNames += course.coursetitle + ", "
+
+	return statement("You are registered for the following classes " +  CourseNames)
 
 
-@ask.intent("ClassIntent")
-@supervise.guide
+
 def promptnextclass():
 	app.logger.debug('promptnextclass')
 	pass
 
-@ask.intent("ClassIntent")
-@supervise.guide
 def promptdistance():
 	app.logger.debug("promptdistance")
 
@@ -135,8 +170,6 @@ def calculate_rundown():
 
 
 
-@ask.intent("ClassIntent")
-@supervise.guide
 def chooseclass():
 	app.logger.debug("chooseclass")
 	pass
@@ -159,5 +192,7 @@ if __name__ == '__main__':
 	global_init()
 	if username is not None and password is not None:
 		user = Student(username, password)
-		app.run(debug=True)
+		user.request_token()
+		user.request_class_info()
+		app.run(debug=True, use_reloader=False)
 
