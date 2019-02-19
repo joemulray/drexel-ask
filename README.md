@@ -4,8 +4,7 @@
 
 ### Prerequisites
 
-* ngrok
-    * [Install Here](https://ngrok.com/download)
+* [ngrok](https://ngrok.com/download)
 * python-pip
 * Amazon Developer Account
 
@@ -25,7 +24,7 @@ python app.py
 ```
 ➜  ~ ngrok http 5000
 
-ngrok by @inconshreveable                                                                           (Ctrl+C to quit)
+ngrok by @inconshreveable
                                                                                                                     
 Session Status                online                                                                                
 Session Expires               7 hours, 59 minutes                                                                   
