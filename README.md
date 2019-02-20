@@ -25,18 +25,19 @@ python app.py
 ➜  ~ ngrok http 5000
 
 ngrok by @inconshreveable
-                                                                                                                    
-Session Status                online                                                                                
-Session Expires               7 hours, 59 minutes                                                                   
-Version                       2.2.8                                                                                 
-Region                        United States (us)                                                                    
-Web Interface                 http://127.0.0.1:4040                                                                 
-Forwarding                    http://96c94a4b.ngrok.io -> localhost:5000                                            
-Forwarding                    https://96c94a4b.ngrok.io -> localhost:5000                                           
-                                                                                                                    
-Connections                   ttl     opn     rt1     rt5     p50     p90                                           
-                              0       0       0.00    0.00    0.00    0.00                                                                                                                                                           
+
+Session Status                online
+Session Expires               7 hours, 59 minutes
+Version                       2.2.8
+Region                        United States (us)
+Web Interface                 http://127.0.0.1:4040
+Forwarding                    http://96c94a4b.ngrok.io -> localhost:5000
+Forwarding                    https://96c94a4b.ngrok.io -> localhost:5000
+
+Connections                   ttl     opn     rt1     rt5     p50     p90
+                              0       0       0.00    0.00    0.00    0.00
 ```
+
 * You will use this url : `https://96c94a4b.ngrok.io` as your Default Region endpoint
 * Select `My development endpoint is a sub-domain of a domain that has a wildcard certificate from a certificate authority`
 * Bulk upload the sample utterances
