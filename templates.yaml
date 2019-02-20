@@ -1,8 +1,8 @@
 welcome_message: "Hello Welcome to Drexel Ask. \
 To ask for your next class say: whats my next class. \
 To ask what your semster is like say: whats my semester like. \
-For specific information say: Tell me information about classname \
-Would you like to hear your daily rundown?"
+For specific information say: Tell me information about a classname"
+
 
 rundown_message: "Would you like to hear your daily rundown?"
 

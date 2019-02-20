@@ -6,6 +6,7 @@ from flask_ask import Ask, statement, question , session, convert_errors
 from datetime import datetime
 from afg import Supervisor
 from hashlib import sha1
+from enum import Enum
 import requests
 import hmac
 import time
@@ -26,10 +27,17 @@ password = None
 
 
 
+class TermEnum(Enum):
+	S15 = "Fall Semester"
+	S25 = "Winter Semester"
+	S35 = "Spring Semester"
+	S45 = "Summer Semester"
+
 
 class Module(object):
 	def __init__(self, object):
 		 self.coursetitle = object.get("CourseTitle", "")
+		 self.subjectcode = object.get("SubjectCode", "")
 		 self.coursenumber = object.get("CourseNumber", "")
 		 self.section = object.get("Section", "")
 		 self.classmeetings = object.get("ClassMeetings", "")
@@ -38,7 +46,8 @@ class Module(object):
 
 
 	def __str__(self):
-		return "CourseTitle: %s CourseNumber: %s" %(self.coursetitle, self.coursenumber)
+		return "%s%s : %s" %(self.subjectcode, self.coursenumber, self.coursetitle)
+
 
 class Student():
 	def __init__(self, username, password):
@@ -90,6 +99,25 @@ class Student():
 			#now that we have the courses loaded up sort the keys
 			sorted(self.term.items(), key=lambda mod: mod[1])
 
+
+
+	def course_schedule(self):
+		string_dict = {}
+		if self.term is not None:
+			for key, value in self.term.iteritems():
+				module_string = ""
+				for module in value:
+					if not module_string:
+						module_string += str(module)
+					else:
+						module_string = module_string +  ", " + str(module)
+
+
+				string_dict[key] = module_string
+
+		return string_dict
+
+
 @ask.on_session_started
 @supervise.start
 def new_session():
@@ -118,18 +146,16 @@ def welcome():
 def promptclassinfo():
 	app.logger.debug('promptclassinfo')
 
-	currentterm = list(user.term.keys())[0]
+	returnstring = ""
+	coursedict = user.course_schedule()
 
-	if user.term is not None:
-		schedule = user.term[currentterm]
+	for key, value in coursedict.iteritems():
+		#get the enum value for the termcode
+		semkey = "S" + str(key[-2:])
+		semester = TermEnum[semkey].value
+		returnstring = returnstring +  "For the %s. You are registerd for %s ... " %(semester, value)
 
-	CourseNames = ""
-
-	for course in schedule:
-		CourseNames += course.coursetitle + ", "
-
-	return statement("You are registered for the following classes " +  CourseNames)
-
+	return statement("Here is your class schedule. " + returnstring)
 
 
 def promptnextclass():
