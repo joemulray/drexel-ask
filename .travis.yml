@@ -6,5 +6,5 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - echo "TODO: add test cases"
+  - echo "add test cases"
 
