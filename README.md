@@ -2,6 +2,8 @@
 
 # drexel-ask
 
+[![Build Status](https://travis-ci.org/joemulray/drexel-ask.svg?branch=master)](https://travis-ci.org/joemulray/drexel-ask)
+
 ### Prerequisites
 
 * [ngrok](https://ngrok.com/download)
