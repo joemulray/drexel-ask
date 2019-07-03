@@ -2,6 +2,9 @@
 
 # drexel-ask
 
+[![](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/images/0)](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/links/0)[![](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/images/1)](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/links/1)[![](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/images/2)](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/links/2)[![](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/images/3)](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/links/3)[![](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/images/4)](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/links/4)[![](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/images/5)](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/links/5)[![](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/images/6)](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/links/6)[![](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/images/7)](https://sourcerer.io/fame/joemulray/drexel-open-source/drexel-ask/links/7)
+
+
 [![Build Status](https://travis-ci.org/joemulray/drexel-ask.svg?branch=master)](https://travis-ci.org/joemulray/drexel-ask)
 
 
