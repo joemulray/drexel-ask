@@ -1,10 +1,11 @@
 language: python
 python:
-  - "2.7"
+  - "3.6"
 
 install:
+  - python -m pip install pip==9.0.3
   - pip install -r requirements.txt
 
 script:
-  - echo "add test cases"
+  - python app.py
 
