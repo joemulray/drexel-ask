@@ -22,5 +22,5 @@ python-dateutil==2.7.5
 PyYAML==5.4
 requests==2.21.0
 six==1.11.0
-Werkzeug==0.15.3
+Werkzeug==2.2.3
 wrapt==1.11.1
